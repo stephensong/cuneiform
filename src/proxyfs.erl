@@ -1,0 +1,2 @@
+-module( proxyfs ).
+-behaviour( fs_srv ).

@@ -1,0 +1,2 @@
+-module( hdfs ).
+-behaviour( fs_srv ).

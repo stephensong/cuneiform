@@ -1,14 +1,16 @@
-
 {application, cuneiform,
- [
-  {description, "Cuneiform: A Functional Language for Large Scale Scientific Data Analysis"},
-  {vsn, "2.2.1-snapshot"},
+ [{description, "An OTP application"},
+  {vsn, "2.4.0-snapshot"},
   {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib,
-                  inets
-                 ]},
-  {mod, {cuneiform_app, []}},
-  {env, []}
+  {mod, { cuneiform_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
  ]}.
