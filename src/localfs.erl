@@ -23,10 +23,10 @@ when is_list( RemoteFile ),
   AbsRemoteFile = lists:flatten( [RepoDir, $/, RemoteFile] ),
 
   case filelib:ensure_dir( Ld ) of
-    {error, R1} -> error( [{reason, R1}, {op, ensure_dir}, {arg, [Rd]}] );
+    {error, R1} -> error( [{reason, R1}, {op, ensure_dir}, {arg, [Ld]}] );
     ok          ->
       case file:make_symlink( AbsRemoteFile, LocalFile ) of
-        {error, R2} -> error, [{reason, R2},
+        {error, R2} -> error( [{reason, R2},
                                {op, make_symlink},
                                {arg, [LocalFile, RemoteFile]}] );
         ok          -> ok
@@ -45,7 +45,7 @@ when is_list( LocalFile ),
     {error, R1} -> error( [{reason, R1}, {op, ensure_dir}, {arg, [Rd]}] );
     ok          ->
       case file:make_symlink( LocalFile, RemoteFile ) of
-        {error, R2} -> error, [{reason, R2},
+        {error, R2} -> error( [{reason, R2},
                                {op, make_symlink},
                                {arg, [LocalFile, RemoteFile]}] );
         ok          -> ok
