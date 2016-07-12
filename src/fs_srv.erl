@@ -4,7 +4,6 @@
 
 -module( fs_srv ).
 -behaviour( gen_server ).
--define( SERVER, ?MODULE ).
 
 -author( 'Jörgen Brandt <brandjoe@hu-berlin.de>' ).
 
@@ -49,24 +48,24 @@ when Mod     :: atom(),
      Pid     :: pid().
 
 start_link( Mod, UserArg ) when is_atom( Mod ) ->
-  gen_server:start_link( {local, ?SERVER}, ?MODULE, [Mod, UserArg], [] ).
+  gen_server:start_link( {global, ?MODULE}, [Mod, UserArg], [] ).
 
 
--spec stage_in( RemoteFile, LocalDir ) -> Pid
+-spec stage_in( RemoteFile, LocalDir ) -> function()
 when RemoteFile :: string(),
      LocalDir   :: string(),
      Pid        :: pid().
 
 stage_in( RemoteFile, LocalDir ) ->
-  gen_server:call( ?SERVER, {stage_in, RemoteFile, LocalDir} ).
+  gen_server:call( ?MODULE, {stage_in, RemoteFile, LocalDir} ).
 
--spec stage_out( LocalFile, RemoteDir ) -> Pid
+-spec stage_out( LocalFile, RemoteDir ) -> function()
 when LocalFile :: string(),
      RemoteDir :: string(),
      Pid       :: pid().
 
 stage_out( LocalFile, RemoteDir ) ->
-  gen_server:call( ?SERVER, {stage_out, LocalFile, RemoteDir} ).
+  gen_server:call( ?MODULE, {stage_out, LocalFile, RemoteDir} ).
 
 %%====================================================================
 %% gen_server Function Definitions
@@ -85,11 +84,11 @@ when is_list( RemoteFile ),
      is_list( LocalDir ),
      is_atom( Mod ) ->
 
-  Pid = spawn( fun() ->
-                 Mod:stage_in( RemoteFile, LocalDir, UserInfo )
-               end ),
+  F =fun() ->
+       Mod:stage_in( RemoteFile, LocalDir, UserInfo )
+     end,
 
-  {reply, Pid, State};
+  {reply, F, State};
 
 handle_call( {stage_out, LocalFile, RemoteDir}, _From,
              State = #mod_state{ mod = Mod, user_info = UserInfo } )
@@ -98,11 +97,11 @@ when is_list( LocalFile ),
      is_list( RemoteDir ),
      is_atom( Mod ) ->
 
-  Pid = spawn( fun() ->
-                 Mod:stage_out( LocalFile, RemoteDir, UserInfo )
-               end ),
+  F = fun() ->
+        Mod:stage_out( LocalFile, RemoteDir, UserInfo )
+      end,
 
-  {reply, Pid, State}.
+  {reply, F, State}.
 
 handle_cast( _Msg, State ) ->
   {noreply, State}.
