@@ -53,16 +53,14 @@ start_link( Mod, UserArg ) when is_atom( Mod ) ->
 
 -spec stage_in( RemoteFile, LocalDir ) -> function()
 when RemoteFile :: string(),
-     LocalDir   :: string(),
-     Pid        :: pid().
+     LocalDir   :: string().
 
 stage_in( RemoteFile, LocalDir ) ->
   gen_server:call( ?MODULE, {stage_in, RemoteFile, LocalDir} ).
 
 -spec stage_out( LocalFile, RemoteDir ) -> function()
 when LocalFile :: string(),
-     RemoteDir :: string(),
-     Pid       :: pid().
+     RemoteDir :: string().
 
 stage_out( LocalFile, RemoteDir ) ->
   gen_server:call( ?MODULE, {stage_out, LocalFile, RemoteDir} ).
