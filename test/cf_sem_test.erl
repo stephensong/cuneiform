@@ -24,7 +24,7 @@
 -define( THETA0, {#{}, fun mu/1, #{}, #{}} ).
 
 mu( {app, _AppLine, _C, {lam, _LamLine, LamName, {sign, Lo, _Li}, _B}, _Fa} ) ->
-  {fut, LamName, random:uniform( 1000000000 ), Lo}.
+  {fut, LamName, rand:uniform( 1000000000 ), Lo}.
 
 nil_should_eval_itself_test() ->
   ?assertEqual( [], cf_sem:eval( [], ?THETA0 ) ).
