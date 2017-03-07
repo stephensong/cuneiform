@@ -1,4 +1,4 @@
-# Cuneiform [![Build Status](https://travis-ci.org/joergen7/cuneiform.svg?branch=master)](https://travis-ci.org/joergen7/cuneiform)
+# Cuneiform [![Build Status](https://travis-ci.org/joergen7/cuneiform.svg?branch=2.2.1-hotfix)](https://travis-ci.org/joergen7/cuneiform)
 
 **[cuneiform-lang.org](http://www.cuneiform-lang.org/)**
 
